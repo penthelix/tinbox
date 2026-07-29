@@ -1,13 +1,22 @@
 import feedparser
 
-# Dummy URL from ThePrimeTime
-FEED_URL = (
-    "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ"
-)
+FEED_URLS: set[str] = {
+    "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ",
+    "https://www.youtube.com/feeds/videos.xml?channel_id=UCQHX6ViZmPsWiYSFAyS0a3Q",
+    "https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw",
+}
 
 
-def fetch_videos() -> list[dict[str, str]]:
-    feed = feedparser.parse(FEED_URL)
+def fetch_videos():
+    all_videos: list[dict[str, str]] = []
+    for url in FEED_URLS:
+        videos = fetch_videos_from_channel(url)
+        all_videos.extend(videos)
+    return all_videos
+
+
+def fetch_videos_from_channel(feed_url) -> list[dict[str, str]]:
+    feed = feedparser.parse(feed_url)
     videos = []
 
     for entry in feed.entries:
