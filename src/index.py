@@ -29,10 +29,15 @@ def remove_shorts(videos: list[dict[str, str]]) -> list[dict[str, str]]:
 def remove_videos_by_keyboard(
     videos: list[dict[str, str]], keyword: str
 ) -> list[dict[str, str]]:
+    if not keyword:
+        raise ValueError("Keyword cannot be empty.")
+
+    keyword = keyword.lower()
+    title = video["title"].lower()
+    description = video["description"].lower()
+
     return [
-        video
-        for video in videos
-        if keyword not in video["title"] and keyword not in video["description"]
+        video for video in videos if keyword not in title and keyword not in description
     ]
 
 
