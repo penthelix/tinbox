@@ -22,7 +22,11 @@ def fetch_videos() -> list[dict[str, str]]:
     return videos
 
 
-def remove_videos_by_keyword(
+def remove_shorts(videos: list[dict[str, str]]) -> list[dict[str, str]]:
+    return [video for video in videos if "/shorts/" not in video["link"]]
+
+
+def remove_videos_by_keyboard(
     videos: list[dict[str, str]], keyword: str
 ) -> list[dict[str, str]]:
     return [
@@ -34,7 +38,7 @@ def remove_videos_by_keyword(
 
 if __name__ == "__main__":
     videos = fetch_videos()
-    videos = remove_videos_by_keyword(videos, "#short")
+    videos = remove_shorts(videos)
 
     for video in videos:
         print(video["title"])
