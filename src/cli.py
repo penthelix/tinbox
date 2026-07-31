@@ -1,25 +1,78 @@
 import argparse
 
+import core
+import storage
 
-def validate_args(args) -> None:
+
+def validate_args(args) -> argparse.Namespace:
     assert isinstance(args.init, bool), f"args.init is {type(args.init)}"
     assert isinstance(args.add, str | None), f"args.add is {type(args.add)}"
     assert isinstance(args.feed, bool), f"args.feed is {type(args.feed)}"
     assert isinstance(args.delete, str | None), f"args.delete is {type(args.delete)}"
     assert isinstance(args.list, bool), f"args.list is {type(args.list)}"
 
-    is_arg_given = [
-        args.init,
-        not args.feed is None,
-        not args.add is None,
-        not args.delete is None,
-        args.list,
-    ]
+    is_arg_given = one_hot_vector(args)
 
     if sum(is_arg_given) > 1:
         raise ValueError(
             f"Only one argument can be given at a time. Received {sum(is_arg_given)}."
         )
+
+    if sum(is_arg_given) == 0:
+        args.feed = ["inbox"]
+
+    return args
+
+
+def one_hot_vector(args: argparse.Namespace):
+    return [
+        args.init,
+        args.feed,
+        not args.add is None,
+        not args.delete is None,
+        args.list,
+    ]
+
+
+def parse(args: argparse.Namespace):
+    def _init():
+        storage.init_config()
+        print("Initialized config file.")
+
+    def _feed():
+        videos = core.fetch_videos()
+        videos = core.remove_shorts(videos)
+        return videos
+
+    def _add():
+        storage.add_feed_url(args.add)
+        print(f"Added {args.add} to your feeds.")
+
+    def _delete():
+        try:
+            storage.delete_feed_url(args.delete)
+            print(f"Deleted {args.deleted} from your feeds.")
+        except storage.URLNotFoundError:
+            print(f"URL {args.delete} not found in your feeds.")
+            return
+
+    def _list():
+        feeds: set[str] = storage.get_feed_urls()
+        print(f"Your feeds: {feeds}")
+
+    vector = one_hot_vector(args)
+    assert sum(vector) == 1
+
+    if vector[0]:
+        _init()
+    elif vector[1]:
+        _feed()
+    elif vector[2]:
+        _add()
+    elif vector[3]:
+        _delete()
+    elif vector[4]:
+        _list()
 
 
 parser = argparse.ArgumentParser(
@@ -37,4 +90,5 @@ parser.add_argument("-d", "--delete", action="store", help="delete a feed")
 parser.add_argument("-l", "--list", action="store_true", help="list all feeds")
 
 args = parser.parse_args()
-validate_args(args)
+args = validate_args(args)
+parse(args)
