@@ -1,7 +1,7 @@
 import argparse
 
+import config
 import core
-import storage
 
 
 def validate_args(args) -> argparse.Namespace:
@@ -36,7 +36,7 @@ def one_hot_vector(args: argparse.Namespace):
 
 def parse(args: argparse.Namespace):
     def _init():
-        storage.init_config()
+        config.init_config()
         print("Initialized config file.")
 
     def _feed():
@@ -45,19 +45,19 @@ def parse(args: argparse.Namespace):
         return videos
 
     def _add():
-        storage.add_feed_url(args.add)
+        config.add_feed_url(args.add)
         print(f"Added {args.add} to your feeds.")
 
     def _delete():
         try:
-            storage.delete_feed_url(args.delete)
+            config.delete_feed_url(args.delete)
             print(f"Deleted {args.deleted} from your feeds.")
-        except storage.URLNotFoundError:
+        except config.URLNotFoundError:
             print(f"URL {args.delete} not found in your feeds.")
             return
 
     def _list():
-        feeds: set[str] = storage.get_feed_urls()
+        feeds: set[str] = config.get_feed_urls()
         print(f"Your feeds: {feeds}")
 
     vector = one_hot_vector(args)
