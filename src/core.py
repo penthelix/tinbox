@@ -48,7 +48,7 @@ def remove_shorts(videos: list[dict[str, str]]) -> list[dict[str, str]]:
     return [video for video in videos if "/shorts/" not in video["link"]]
 
 
-def remove_videos_by_keyboard(
+def remove_videos_by_keyword(
     videos: list[dict[str, str]], keyword: str
 ) -> list[dict[str, str]]:
     if not keyword:
