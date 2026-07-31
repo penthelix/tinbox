@@ -48,7 +48,7 @@ def add_feed_url(url: str) -> None:
     set_feed_urls(feed_urls)
 
 
-def remove_feed_url(url: str) -> None:
+def delete_feed_url(url: str) -> None:
     feed_urls: set[str] = get_feed_urls()
 
     if url in feed_urls:
