@@ -4,7 +4,7 @@ import argparse
 def validate_args(args) -> None:
     assert isinstance(args.init, bool), f"args.init is {type(args.init)}"
     assert isinstance(args.add, str | None), f"args.add is {type(args.add)}"
-    assert isinstance(args.feed, list | None), f"args.feed is {type(args.feed)}"
+    assert isinstance(args.feed, bool), f"args.feed is {type(args.feed)}"
     assert isinstance(args.delete, str | None), f"args.delete is {type(args.delete)}"
     assert isinstance(args.list, bool), f"args.list is {type(args.list)}"
 
@@ -30,7 +30,7 @@ parser.add_argument(
     "-i", "--init", action="store_true", help="set up your %(prog)s feed"
 )
 parser.add_argument(
-    "-f", "--feed", action="append", help="get the feed you want to read"
+    "-f", "--feed", action="store_true", help="get the feed you want to read"
 )
 parser.add_argument("-a", "--add", action="store", help="add a feed")
 parser.add_argument("-d", "--delete", action="store", help="delete a feed")
