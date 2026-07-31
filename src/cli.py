@@ -1,7 +1,7 @@
 import argparse
 
 import config
-import core
+import fetch
 
 
 def validate_args(args) -> argparse.Namespace:
@@ -40,8 +40,8 @@ def parse(args: argparse.Namespace):
         print("Initialized config file.")
 
     def _feed():
-        videos = core.fetch_videos()
-        videos = core.remove_shorts(videos)
+        videos = fetch.fetch_videos()
+        videos = fetch.remove_shorts(videos)
         return videos
 
     def _add():
