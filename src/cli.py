@@ -19,7 +19,7 @@ def validate_args(args) -> argparse.Namespace:
         )
 
     if sum(is_arg_given) == 0:
-        args.feed = ["inbox"]
+        args.feed = True
 
     return args
 
@@ -61,7 +61,9 @@ def parse(args: argparse.Namespace):
         print(f"Your feeds: {feeds}")
 
     vector = one_hot_vector(args)
-    assert sum(vector) == 1
+    assert sum(vector) == 1, (
+        f"Only one argument can be given at a time. Received {sum(vector)}"
+    )
 
     if vector[0]:
         _init()
