@@ -1,0 +1,8 @@
+[project]
+name = "tinbox"
+version = "0.1.0"
+dependencies = [
+    "argparse>=1.4.0",
+    "feedparser==6.0.13",
+    "feedparser-sgmllib==1.0.0",
+]
