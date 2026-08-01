@@ -6,12 +6,19 @@ CONFIG_FORMAT: dict = {"feed_urls": []}
 
 
 def get_config() -> dict:
+    if not CONFIG_PATH.exists():
+        raise FileNotFoundError(f"Config file not found at {CONFIG_PATH}")
+
     with open(CONFIG_PATH, "r") as f:
         config = json.load(f)
     return config
 
 
 def set_config(config: dict) -> None:
+    if not CONFIG_PATH.exists():
+        CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        CONFIG_PATH.touch()
+
     with open(CONFIG_PATH, "w") as f:
         json.dump(config, f, indent=4)
 
