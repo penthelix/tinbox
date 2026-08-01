@@ -1,7 +1,6 @@
 import argparse
 
-import config
-import fetch
+from . import config, fetch
 
 
 def one_hot_vector(args: argparse.Namespace) -> list[bool]:
