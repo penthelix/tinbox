@@ -42,7 +42,10 @@ def parse(args: argparse.Namespace):
     def _feed():
         videos = fetch.fetch_videos()
         videos = fetch.remove_shorts(videos)
-        return videos
+
+        print(f"Found {len(videos)} videos from {len(fetch.FEED_URLS)}")
+        for video in videos:
+            print(video["title"])
 
     def _add():
         config.add_feed_url(args.add)
