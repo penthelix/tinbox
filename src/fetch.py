@@ -61,11 +61,3 @@ def remove_videos_by_keyword(
     return [
         video for video in videos if keyword not in title and keyword not in description
     ]
-
-
-if __name__ == "__main__":
-    videos = fetch_videos()
-    videos = remove_shorts(videos)
-
-    for video in videos:
-        print(video["title"])

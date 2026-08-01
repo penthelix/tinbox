@@ -4,6 +4,16 @@ import config
 import fetch
 
 
+def one_hot_vector(args: argparse.Namespace) -> list[bool]:
+    return [
+        args.init,
+        args.feed,
+        not args.add is None,
+        not args.delete is None,
+        args.list,
+    ]
+
+
 def validate_args(args) -> argparse.Namespace:
     assert isinstance(args.init, bool), f"args.init is {type(args.init)}"
     assert isinstance(args.add, str | None), f"args.add is {type(args.add)}"
@@ -22,16 +32,6 @@ def validate_args(args) -> argparse.Namespace:
         args.feed = True
 
     return args
-
-
-def one_hot_vector(args: argparse.Namespace):
-    return [
-        args.init,
-        args.feed,
-        not args.add is None,
-        not args.delete is None,
-        args.list,
-    ]
 
 
 def parse(args: argparse.Namespace):
