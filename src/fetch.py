@@ -14,14 +14,14 @@ def fetch_videos() -> list[dict[str, str]]:
 
 
 def fetch_videos_from_channel(feed_url) -> list[dict[str, str]]:
-    feed = feedparser.parse(feed_url)
+    feed: feedparser.FeedParserDict = feedparser.parse(feed_url)
     if not feed.entries:
         raise ValueError("No videos found in the feed.")
 
     videos: list[dict[str, str]] = []
 
     for entry in feed.entries:
-        missing = [
+        missing: list[str] = [
             field
             for field in ["title", "description", "link", "published"]
             if not getattr(entry, field, None)
@@ -35,10 +35,10 @@ def fetch_videos_from_channel(feed_url) -> list[dict[str, str]]:
 
         videos.append(
             {
-                "title": entry.title,
-                "description": entry.description,
-                "link": entry.link,
-                "published": entry.published,
+                "title": str(entry.title),
+                "description": str(entry.description),
+                "link": str(entry.link),
+                "published": str(entry.published),
             }
         )
     return videos

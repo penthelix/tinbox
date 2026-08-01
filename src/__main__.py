@@ -59,7 +59,7 @@ def parse(args: argparse.Namespace):
             return
 
     def _list():
-        feeds: set[str] = config.get_feed_urls()
+        feeds = config.get_feed_urls()
         print(f"Your feeds: {feeds}")
 
     vector = one_hot_vector(args)
@@ -79,7 +79,7 @@ def parse(args: argparse.Namespace):
         _list()
 
 
-parser = argparse.ArgumentParser(
+parser: argparse.ArgumentParser = argparse.ArgumentParser(
     prog="tinbox",
     description="Your distraction-free YouTube inbox in the terminal",
 )

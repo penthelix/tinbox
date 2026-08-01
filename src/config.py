@@ -1,7 +1,8 @@
 import json
 from pathlib import Path
 
-CONFIG_PATH = Path.home() / ".config" / "tinbox" / "config.json"
+CONFIG_PATH: Path = Path.home() / ".config" / "tinbox" / "config.json"
+CONFIG_FORMAT: dict = {"feed_urls": []}
 
 
 def get_config() -> dict:
@@ -16,11 +17,7 @@ def set_config(config: dict) -> None:
 
 
 def init_config() -> None:
-    set_config(
-        {
-            "feed_urls": [],
-        }
-    )
+    set_config(CONFIG_FORMAT)
 
 
 def set_attribute(key: str, value: str | list) -> None:
@@ -29,7 +26,7 @@ def set_attribute(key: str, value: str | list) -> None:
     set_config(config)
 
 
-def get_attribute(key: str) -> str:
+def get_attribute(key: str) -> str | list:
     config = get_config()
     return config[key]
 
@@ -43,13 +40,13 @@ def set_feed_urls(urls: set[str]) -> None:
 
 
 def add_feed_url(url: str) -> None:
-    feed_urls: set[str] = get_feed_urls()
+    feed_urls = get_feed_urls()
     feed_urls.add(url)
     set_feed_urls(feed_urls)
 
 
 def delete_feed_url(url: str) -> None:
-    feed_urls: set[str] = get_feed_urls()
+    feed_urls = get_feed_urls()
 
     if url in feed_urls:
         feed_urls.remove(url)
