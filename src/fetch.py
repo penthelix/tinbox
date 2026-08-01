@@ -46,18 +46,3 @@ def fetch_videos_from_channel(feed_url) -> list[dict[str, str]]:
 
 def remove_shorts(videos: list[dict[str, str]]) -> list[dict[str, str]]:
     return [video for video in videos if "/shorts/" not in video["link"]]
-
-
-def remove_videos_by_keyword(
-    videos: list[dict[str, str]], keyword: str
-) -> list[dict[str, str]]:
-    if not keyword:
-        raise ValueError("Keyword cannot be empty.")
-
-    keyword = keyword.lower()
-    title: str = video["title"].lower()
-    description: str = video["description"].lower()
-
-    return [
-        video for video in videos if keyword not in title and keyword not in description
-    ]
