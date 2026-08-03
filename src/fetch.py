@@ -1,6 +1,6 @@
 import feedparser
 
-from .config import get_feed_urls
+from config import get_feed_urls
 
 FEED_URLS: set[str] = get_feed_urls()
 
