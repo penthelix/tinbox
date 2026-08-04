@@ -1,7 +1,7 @@
+#!/usr/bin/env python3
 import argparse
 
-import config
-import fetch
+from src import config, fetch
 
 
 def one_hot_vector(args: argparse.Namespace) -> list[bool]:
@@ -80,20 +80,22 @@ def parse(args: argparse.Namespace):
         _list()
 
 
-parser: argparse.ArgumentParser = argparse.ArgumentParser(
-    prog="tinbox",
-    description="Your distraction-free YouTube inbox in the terminal",
-)
-parser.add_argument(
-    "-i", "--init", action="store_true", help="set up your %(prog)s feed"
-)
-parser.add_argument(
-    "-f", "--feed", action="store_true", help="get the feed you want to read"
-)
-parser.add_argument("-a", "--add", action="store", help="add a feed")
-parser.add_argument("-d", "--delete", action="store", help="delete a feed")
-parser.add_argument("-l", "--list", action="store_true", help="list all feeds")
+if __name__ == "__main__":
+    parser: argparse.ArgumentParser = argparse.ArgumentParser(
+        prog="tinbox",
+        description="Your distraction-free YouTube inbox in the terminal",
+    )
+    parser.add_argument(
+        "-i", "--init", action="store_true", help="set up your %(prog)s feed"
+    )
+    parser.add_argument(
+        "-f", "--feed", action="store_true", help="get the feed you want to read"
+    )
+    parser.add_argument("-a", "--add", action="store", help="add a feed")
+    parser.add_argument("-d", "--delete", action="store", help="delete a feed")
+    parser.add_argument("-l", "--list", action="store_true", help="list all feeds")
 
-args = parser.parse_args()
-args = validate_args(args)
-parse(args)
+    args = parser.parse_args()
+    args = validate_args(args)
+    parse(args)
+    input()
