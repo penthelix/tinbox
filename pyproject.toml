@@ -6,3 +6,8 @@ dependencies = [
     "feedparser==6.0.13",
     "feedparser-sgmllib==1.0.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
