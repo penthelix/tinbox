@@ -5,21 +5,23 @@ CONFIG_PATH: Path = Path.home() / ".config" / "tinbox" / "config.json"
 CONFIG_FORMAT: dict = {"feed_urls": []}
 
 
-def get_config() -> dict:
-    if not CONFIG_PATH.exists():
+def get_config(config_path: str | Path = CONFIG_PATH) -> dict:
+    config_path = Path(config_path)
+    if not config_path.exists():
         raise FileNotFoundError(f"Config file not found at {CONFIG_PATH}")
 
-    with open(CONFIG_PATH, "r") as f:
+    with open(config_path, "r") as f:
         config = json.load(f)
     return config
 
 
-def set_config(config: dict) -> None:
-    if not CONFIG_PATH.exists():
-        CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
-        CONFIG_PATH.touch()
+def set_config(config: dict, config_path: str | Path = CONFIG_PATH) -> None:
+    config_path = Path(config_path)
+    if not config_path.exists():
+        config_path.parent.mkdir(parents=True, exist_ok=True)
+        config_path.touch()
 
-    with open(CONFIG_PATH, "w") as f:
+    with open(config_path, "w") as f:
         json.dump(config, f, indent=4)
 
 

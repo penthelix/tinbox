@@ -17,7 +17,7 @@ def fetch_videos() -> list[dict[str, str]]:
     return all_videos
 
 
-def fetch_videos_from_channel(feed_url) -> list[dict[str, str]]:
+def fetch_videos_from_channel(feed_url: str) -> list[dict[str, str]]:
     feed: feedparser.FeedParserDict = feedparser.parse(feed_url)
     if not feed.entries:
         raise ValueError("No videos found in the feed.")
