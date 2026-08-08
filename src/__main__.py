@@ -6,7 +6,6 @@ from src import config, fetch
 
 def one_hot_vector(args: argparse.Namespace) -> list[bool]:
     return [
-        args.init,
         args.feed,
         not args.add is None,
         not args.delete is None,
@@ -15,7 +14,6 @@ def one_hot_vector(args: argparse.Namespace) -> list[bool]:
 
 
 def validate_args(args) -> argparse.Namespace:
-    assert isinstance(args.init, bool), f"args.init is {type(args.init)}"
     assert isinstance(args.add, str | None), f"args.add is {type(args.add)}"
     assert isinstance(args.feed, bool), f"args.feed is {type(args.feed)}"
     assert isinstance(args.delete, str | None), f"args.delete is {type(args.delete)}"
@@ -35,10 +33,6 @@ def validate_args(args) -> argparse.Namespace:
 
 
 def parse(args: argparse.Namespace):
-    def _init():
-        config.init_config()
-        print("Initialized config file.")
-
     def _feed():
         videos = fetch.fetch_videos()
         videos = fetch.remove_shorts(videos)
@@ -69,14 +63,12 @@ def parse(args: argparse.Namespace):
     )
 
     if vector[0]:
-        _init()
-    elif vector[1]:
         _feed()
-    elif vector[2]:
+    elif vector[1]:
         _add()
-    elif vector[3]:
+    elif vector[2]:
         _delete()
-    elif vector[4]:
+    elif vector[3]:
         _list()
 
 
@@ -84,9 +76,6 @@ if __name__ == "__main__":
     parser: argparse.ArgumentParser = argparse.ArgumentParser(
         prog="tinbox",
         description="Your distraction-free YouTube inbox in the terminal",
-    )
-    parser.add_argument(
-        "-i", "--init", action="store_true", help="set up your %(prog)s feed"
     )
     parser.add_argument(
         "-f", "--feed", action="store_true", help="get the feed you want to read"

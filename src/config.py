@@ -25,10 +25,6 @@ def set_config(config: dict, config_path: str | Path = CONFIG_PATH) -> None:
         json.dump(config, f, indent=4)
 
 
-def init_config() -> None:
-    set_config(CONFIG_FORMAT)
-
-
 def set_attribute(key: str, value: str | list) -> None:
     config = get_config()
     config[key] = value
