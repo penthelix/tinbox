@@ -75,6 +75,7 @@ if __name__ == "__main__":
     parser: argparse.ArgumentParser = argparse.ArgumentParser(
         prog="tinbox",
         description="Your distraction-free YouTube inbox in the terminal",
+        epilog="Get started by adding a feed with --add",
     )
     parser.add_argument(
         "-f", "--feed", action="store_true", help="get the feed you want to read"
