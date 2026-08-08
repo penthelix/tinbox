@@ -1,11 +1,28 @@
 # tinbox
 
-A customizable RSS feed for YouTube channels. CLI program.
+A CLI RSS feed inbox for YouTube channels.
 
 ## Features
 
-1. Subscribe to YouTube channels like RSS feeds and receive videos in the app inbox.
-2. Filter videos by duration or keyword matches.
-3. Mark videos as done/watched to remove them from the inbox.
+1. Add RSS feeds of YouTube channels and receive videos in your inbox.
 
-The project borrows the "done/watched" idea from how AntennaPod allows you to mark podcast episodes as watched.
+## Installation
+
+## Project Structure
+
+```
+tinbox
+|-- src
+|   |-- __init__.py
+|   |-- __main__.py # the CLI
+|   |-- config.py # handles your config
+|   `-- fetch.py # handles fetching RSS feeds
+|-- tests
+|   |-- __init__.py
+|   `-- test_fetch.py
+|-- .gitignore
+|-- LICENSE
+|-- pyproject.toml
+|-- README.md
+`-- uv.lock
+```
