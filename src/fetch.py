@@ -34,7 +34,7 @@ def fetch_videos_from_channel(feed_url: str) -> list[dict[str, str]]:
             raise ValueError(
                 "Entry is missing required fields: "
                 + ", ".join(missing)
-                + f"for feed URL: {feed_url}"
+                + f" for feed URL: {feed_url}"
             )
 
         videos.append(
