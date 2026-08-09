@@ -51,7 +51,7 @@ def parse(args: argparse.Namespace):
         try:
             config = cfg.get_config()
             cfg.delete_feed_url(config, args.delete)
-            print(f"Deleted {args.deleted} from your feeds.")
+            print(f"Deleted {args.delete} from your feeds.")
         except cfg.URLNotFoundError:
             print(f"URL {args.delete} not found in your feeds.")
             return
