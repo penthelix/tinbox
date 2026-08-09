@@ -4,6 +4,7 @@ from src import config, fetch
 
 
 def one_hot_vector(args: argparse.Namespace) -> list[bool]:
+    # If you modify this list, make sure to update the if statement in parse() as well.
     return [
         args.feed,
         not args.add is None,
@@ -13,8 +14,8 @@ def one_hot_vector(args: argparse.Namespace) -> list[bool]:
 
 
 def validate_args(args) -> argparse.Namespace:
-    assert isinstance(args.add, str | None), f"args.add is {type(args.add)}"
     assert isinstance(args.feed, bool), f"args.feed is {type(args.feed)}"
+    assert isinstance(args.add, str | None), f"args.add is {type(args.add)}"
     assert isinstance(args.delete, str | None), f"args.delete is {type(args.delete)}"
     assert isinstance(args.list, bool), f"args.list is {type(args.list)}"
 
@@ -36,7 +37,7 @@ def parse(args: argparse.Namespace):
         videos = fetch.fetch_videos()
         videos = fetch.remove_shorts(videos)
 
-        print(f"Found {len(videos)} videos from {len(fetch.FEED_URLS)}")
+        print(f"Found {len(videos)} videos from {len(fetch.FEED_URLS)} feeds.")
         for video in videos:
             print(video["title"])
 
@@ -61,6 +62,7 @@ def parse(args: argparse.Namespace):
         f"Only one argument can be given at a time. Received {sum(vector)}"
     )
 
+    # If you modify this, make sure to update one_hot_vector() as well.
     if vector[0]:
         _feed()
     elif vector[1]:
@@ -87,4 +89,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
     args = validate_args(args)
     parse(args)
-    input()

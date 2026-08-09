@@ -4,8 +4,10 @@ from pathlib import Path
 CONFIG_PATH: Path = Path.home() / ".config" / "tinbox" / "config.json"
 CONFIG_FORMAT: dict = {"feed_urls": []}
 
+type Config = dict[str, str | list[str]]
 
-def get_config(config_path: str | Path = CONFIG_PATH) -> dict:
+
+def get_config(config_path: str | Path = CONFIG_PATH) -> Config:
     config_path = Path(config_path)
     if not config_path.exists():
         raise FileNotFoundError(f"Config file not found at {CONFIG_PATH}")
