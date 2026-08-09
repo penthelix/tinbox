@@ -1,6 +1,7 @@
 import argparse
 
-from src import config, fetch
+from src import config as cfg
+from src import fetch
 
 
 def one_hot_vector(args: argparse.Namespace) -> list[bool]:
@@ -42,19 +43,22 @@ def parse(args: argparse.Namespace):
             print(video["title"])
 
     def _add():
-        config.add_feed_url(args.add)
+        config = cfg.get_config()
+        cfg.add_feed_url(config, args.add)
         print(f"Added {args.add} to your feeds.")
 
     def _delete():
         try:
-            config.delete_feed_url(args.delete)
+            config = cfg.get_config()
+            cfg.delete_feed_url(config, args.delete)
             print(f"Deleted {args.deleted} from your feeds.")
-        except config.URLNotFoundError:
+        except cfg.URLNotFoundError:
             print(f"URL {args.delete} not found in your feeds.")
             return
 
     def _list():
-        feeds = config.get_feed_urls()
+        config = cfg.get_config()
+        feeds = cfg.get_feed_urls(config)
         print(f"Your feeds: {feeds}")
 
     vector = one_hot_vector(args)

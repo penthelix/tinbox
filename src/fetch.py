@@ -1,8 +1,15 @@
 import feedparser
 
-from src.config import get_feed_urls
+from src import config as cfg
 
-FEED_URLS: set[str] = get_feed_urls()
+config: cfg.Config = {}
+try:
+    config = cfg.get_config()
+except FileNotFoundError:
+    cfg.init_config()
+    config = cfg.get_config()
+finally:
+    FEED_URLS: set[str] = cfg.get_feed_urls(config)
 
 
 def is_valid_youtube_url(url: str) -> bool:
