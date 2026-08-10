@@ -37,6 +37,8 @@ def test_fetch_videos():
 
 
 def test_fetch_videos_from_channel():
+    # This is a known channel ID.
+    # I'm hardcoding this because I don't have a better way to test the function.
     videos = fetch_videos_from_channel(
         "https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ",
     )
