@@ -1,6 +1,6 @@
 import feedparser
 
-from src import config as cfg
+from tinbox import config as cfg
 
 config: cfg.Config = {}
 try:

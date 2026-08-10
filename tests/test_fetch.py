@@ -1,4 +1,4 @@
-from src.fetch import (
+from src.tinbox.fetch import (
     FEED_URLS,
     fetch_videos,
     fetch_videos_from_channel,

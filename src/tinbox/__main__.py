@@ -1,7 +1,7 @@
 import argparse
 
-from src import config as cfg
-from src import fetch
+from tinbox import config as cfg
+from tinbox import fetch
 
 
 def one_hot_vector(args: argparse.Namespace) -> list[bool]:
@@ -86,7 +86,7 @@ def parse(args: argparse.Namespace):
         _list()
 
 
-if __name__ == "__main__":
+def main():
     parser: argparse.ArgumentParser = argparse.ArgumentParser(
         prog="tinbox",
         description="Your distraction-free YouTube inbox in the terminal",
@@ -100,3 +100,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     args = validate_args(args)
     parse(args)
+
+
+if __name__ == "__main__":
+    main()
