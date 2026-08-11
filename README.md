@@ -46,7 +46,7 @@ pyinstaller --onefile src/__main__.py
 3. Move the executable to a folder in your PATH. This could be `/usr/local/bin` on MacOS.
 
 ```bash
-mv dist/tinbox /usr/local/bin # MacOS
+mv dist/__main__ /usr/local/bin/tinbox # MacOS
 ```
 
 On Windows, `C:\Windows` is in your PATH by default, though it is recommended to put the executable in `C:\Program Files\tinbox` and subsequently, add that folder to your PATH. [Here](https://stackoverflow.com/q/44272416) is a guide on that.
