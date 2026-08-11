@@ -5,11 +5,11 @@ dependencies = [
     "argparse>=1.4.0",
     "feedparser==6.0.13",
     "feedparser-sgmllib==1.0.0",
-    "pyinstaller>=6.22.0",
 ]
 scripts = { tinbox = "tinbox.__main__:main" }
 
 [dependency-groups]
 dev = [
+    "pyinstaller>=6.22.0",
     "pytest>=9.1.1",
 ]

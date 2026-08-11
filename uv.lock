@@ -189,11 +189,11 @@ dependencies = [
     { name = "argparse" },
     { name = "feedparser" },
     { name = "feedparser-sgmllib" },
-    { name = "pyinstaller" },
 ]
 
 [package.dev-dependencies]
 dev = [
+    { name = "pyinstaller" },
     { name = "pytest" },
 ]
 
@@ -202,8 +202,10 @@ requires-dist = [
     { name = "argparse", specifier = ">=1.4.0" },
     { name = "feedparser", specifier = "==6.0.13" },
     { name = "feedparser-sgmllib", specifier = "==1.0.0" },
-    { name = "pyinstaller", specifier = ">=6.22.0" },
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = ">=9.1.1" }]
+dev = [
+    { name = "pyinstaller", specifier = ">=6.22.0" },
+    { name = "pytest", specifier = ">=9.1.1" },
+]
