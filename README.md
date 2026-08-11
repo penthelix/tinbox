@@ -13,10 +13,11 @@ A CLI RSS feed inbox for YouTube channels.
 ```
 tinbox
 |-- src
-|   |-- __init__.py
-|   |-- __main__.py # the CLI
-|   |-- config.py # handles your config
-|   `-- fetch.py # handles fetching RSS feeds
+|   |-- tinbox
+|       |-- __init__.py
+|       |-- __main__.py # the CLI
+|       |-- config.py # handles your config
+|       `-- fetch.py # handles fetching RSS feeds
 |-- tests
 |   |-- __init__.py
 |   `-- test_fetch.py
