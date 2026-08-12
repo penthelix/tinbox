@@ -89,7 +89,7 @@ def parse(args: argparse.Namespace):
 def main():
     parser: argparse.ArgumentParser = argparse.ArgumentParser(
         prog="tinbox",
-        description="Your distraction-free YouTube inbox in the terminal",
+        description="Your YouTube subscriptions inbox in the terminal",
         epilog="Get started by adding a feed with --add",
     )
     parser.add_argument("-i", "--inbox", action="store_true", help="get your inbox")

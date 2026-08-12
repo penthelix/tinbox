@@ -1,6 +1,6 @@
-# tinbox
+# Tinbox
 
-A CLI RSS feed inbox for YouTube channels.
+A YouTube subscriptions inbox in your terminal, using RSS feeds.
 
 ## Installation
 
