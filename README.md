@@ -117,7 +117,7 @@ Tinbox has been tested on the following operating systems.
 
 1. Debian 13
 
-# Troubleshooting
+## Troubleshooting
 
 If the executable does not run on Linux, ensure that it has execution permissions.
 
