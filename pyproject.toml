@@ -12,4 +12,13 @@ scripts = { tinbox = "tinbox.__main__:main" }
 dev = [
     "pyinstaller>=6.22.0",
     "pytest>=9.1.1",
+    "tinbox",
 ]
+
+[tool.uv.workspace]
+members = [
+    ".",
+]
+
+[tool.uv.sources]
+tinbox = { workspace = true, editable = true }
