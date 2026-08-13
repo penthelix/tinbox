@@ -2,6 +2,8 @@
 
 A YouTube subscriptions inbox in your terminal, using RSS feeds.
 
+![Tinbox help message](./assets/help-message.png)
+
 ## Installation
 
 ### Linux
