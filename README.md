@@ -4,6 +4,10 @@ A YouTube subscriptions inbox in your terminal, using RSS feeds.
 
 ![Tinbox help message](./assets/help-message.png)
 
+Tinbox is a terminal program to view videos released by your subscriptions, without having to open a browser window or interact with YouTube's UI. You can set your subscriptions by adding their RSS feeds and Tinbox will fetch the latest videos from them and display them in your terminal.
+
+Future releases will add video details and the option to mark videos as watched.
+
 ## Installation
 
 ### Linux
@@ -91,6 +95,13 @@ tinbox
 `-- uv.lock
 ```
 
+## Tech Stack
+
+- Python 3.12
+- [uv](https://docs.astral.sh/uv/) for dependency management
+- [feedparser](https://feedparser.readthedocs.io/en/latest/) for parsing RSS feeds
+- [argparse](https://docs.python.org/3/library/argparse.html) for parsing CLI arguments
+
 ## Dev Setup
 
 1. Check if you have uv installed. If not, install [uv](https://docs.astral.sh/uv/getting-started/installation/).
@@ -124,3 +135,7 @@ If the executable does not run on Linux, ensure that it has execution permission
 ```bash
 chmod +x tinbox
 ```
+
+## AI Usage Disclosure
+
+In-line code completion was used in coding this project. Chat was used sparingly to debug. No agents were used.
