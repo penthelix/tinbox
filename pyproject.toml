@@ -1,6 +1,7 @@
 [project]
 name = "tinbox"
 version = "0.1.0"
+requires-python = ">=3.14"
 dependencies = [
     "argparse>=1.4.0",
     "feedparser==6.0.13",
@@ -22,3 +23,6 @@ members = [
 
 [tool.uv.sources]
 tinbox = { workspace = true, editable = true }
+
+[tool.uv]
+package = true

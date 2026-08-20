@@ -108,7 +108,7 @@ uv sync
 3. Run the CLI.
 
 ```bash
-tinbox
+uv run tinbox
 ```
 
 ## Compatibility

@@ -184,7 +184,7 @@ wheels = [
 [[package]]
 name = "tinbox"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "argparse" },
     { name = "feedparser" },
@@ -209,5 +209,5 @@ requires-dist = [
 dev = [
     { name = "pyinstaller", specifier = ">=6.22.0" },
     { name = "pytest", specifier = ">=9.1.1" },
-    { name = "tinbox", virtual = "." },
+    { name = "tinbox", editable = "." },
 ]
