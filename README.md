@@ -4,9 +4,11 @@ A YouTube subscriptions inbox in your terminal, using RSS feeds.
 
 ![Tinbox help message](./assets/help-message.png)
 
-Tinbox is a terminal program to view videos released by your subscriptions, without having to open a browser window or interact with YouTube's UI. You can set your subscriptions by adding their RSS feeds and Tinbox will fetch the latest videos from them and display them in your terminal.
+Tinbox is a terminal program to catch up on videos released by your subscriptions. You can set your subscriptions by adding their RSS feeds and Tinbox will fetch the latest videos from them and display them in your terminal.
 
-Future releases will add video details and the option to mark videos as watched.
+I made this to be able to check in on my subscriptions without having to open a browser window or interact with thumbnails and other distracting parts of the YouTube UI.
+
+Tinbox is still in early development. Future releases will add video details and the option to mark videos as watched, similar to how you'd mark podcast episodes as watched on [AntennaPod](https://antennapod.org/).
 
 ## Installation
 
@@ -79,12 +81,14 @@ If no flag is passed, the program behaves as if `-i` or `--inbox` was passed.
 
 ```
 tinbox
+|-- assets
+|   `-- help-message.png    # the screenshot you saw above
 |-- src
-|   |-- tinbox
+|   `-- tinbox
 |       |-- __init__.py
-|       |-- __main__.py # the CLI
-|       |-- config.py # handles your config
-|       `-- fetch.py # handles fetching RSS feeds
+|       |-- __main__.py     # the CLI
+|       |-- config.py       # handles your config
+|       `-- fetch.py        # handles fetching RSS feeds
 |-- tests
 |   |-- __init__.py
 |   `-- test_fetch.py
