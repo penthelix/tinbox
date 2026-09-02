@@ -2,14 +2,15 @@ import feedparser
 
 from tinbox import config as cfg
 
-config: cfg.Config = {}
+_config: cfg.Config = {}
 try:
-    config = cfg.get_config()
+    _config = cfg.get_config()
 except FileNotFoundError:
     cfg.init_config()
-    config = cfg.get_config()
+    _config = cfg.get_config()
 finally:
-    FEED_URLS: set[str] = cfg.get_feed_urls(config)
+    FEED_URLS: set[str] = cfg.get_feed_urls(_config)
+    del _config
 
 
 def is_valid_youtube_url(url: str) -> bool:
