@@ -77,28 +77,6 @@ When running the CLI, you can use the following flags.
 
 If no flag is passed, the program behaves as if `-i` or `--inbox` was passed.
 
-## Project Structure
-
-```
-tinbox
-|-- assets
-|   `-- help-message.png    # the screenshot you saw above
-|-- src
-|   `-- tinbox
-|       |-- __init__.py
-|       |-- __main__.py     # the CLI
-|       |-- config.py       # handles your config
-|       `-- fetch.py        # handles fetching RSS feeds
-|-- tests
-|   |-- __init__.py
-|   `-- test_fetch.py
-|-- .gitignore
-|-- LICENSE
-|-- pyproject.toml
-|-- README.md
-`-- uv.lock
-```
-
 ## Tech Stack
 
 - Python 3.12
