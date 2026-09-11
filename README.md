@@ -79,7 +79,7 @@ If no flag is passed, the program behaves as if `-i` or `--inbox` was passed.
 
 ## Tech Stack
 
-- Python 3.12
+- Python 3
 - [uv](https://docs.astral.sh/uv/) for dependency management
 - [feedparser](https://feedparser.readthedocs.io/en/latest/) for parsing RSS feeds
 - [argparse](https://docs.python.org/3/library/argparse.html) for parsing CLI arguments
