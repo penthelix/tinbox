@@ -1,6 +1,6 @@
 # Tinbox
 
-A YouTube subscriptions inbox in your terminal, using RSS feeds.
+Fetch YouTube videos from RSS feeds in your terminal.
 
 ![Tinbox help message](./assets/help-message.png)
 
