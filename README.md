@@ -4,7 +4,7 @@ Fetch YouTube videos from RSS feeds in your terminal.
 
 ![Tinbox help message](./assets/help-message.png)
 
-Tinbox is a terminal program to catch up on videos released by your subscriptions. You can set your subscriptions by adding their RSS feeds and Tinbox will fetch the latest videos from them and display them in your terminal.
+Tinbox is a terminal program that displays the latest YouTube videos from your subscriptions in your terminal. You can set your subscriptions by adding their RSS feeds.
 
 I made this to be able to check in on my subscriptions without having to open a browser window or interact with thumbnails and other distracting parts of the YouTube UI.
 
@@ -16,7 +16,7 @@ Tinbox is still in early development. Future releases will add video details and
 
 Tinbox is available as an executable for Linux.
 
-1. Download the latest release from [GitHub releases](https://github.com/penthelix/tinbox/releases).
+1. Download the latest release from [GitHub releases](https://github.com/penthelix/tinbox/releases/latest).
 2. Make the executable executable.
 
 ```bash
