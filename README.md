@@ -65,18 +65,6 @@ On Windows, `C:\Windows` is in your PATH by default, though it is recommended to
 tinbox
 ```
 
-## Usage
-
-When running the CLI, you can use the following flags.
-
-1. `-h` or `--help` to see the help message.
-2. `-i` or `--inbox` to get your inbox.
-3. `-a` or `--add` to add a YouTube channel's RSS feed.
-4. `-d` or `--delete` to delete a YouTube channel's RSS feed.
-5. `-l` or `--list` to list all feeds that are being tracked.
-
-If no flag is passed, the program behaves as if `-i` or `--inbox` was passed.
-
 ## Tech Stack
 
 - Python 3
@@ -109,14 +97,6 @@ uv run tinbox
 Tinbox has been tested on the following operating systems.
 
 1. Debian 13
-
-## Troubleshooting
-
-If the executable does not run on Linux, ensure that it has execution permissions.
-
-```bash
-chmod +x tinbox
-```
 
 ## AI Usage Disclosure
 
