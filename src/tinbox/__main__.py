@@ -1,4 +1,5 @@
 import argparse
+import subprocess
 
 from tinbox import config as cfg
 from tinbox import fetch
@@ -12,6 +13,7 @@ def one_hot_vector(args: argparse.Namespace) -> list[bool]:
         not args.add is None,
         not args.delete is None,
         args.list,
+        args.config,
     ]
 
 
@@ -71,6 +73,9 @@ def parse(args: argparse.Namespace):
 
         print(f"Your feeds: {feeds}")
 
+    def _config():
+        subprocess.run(["vim", cfg.CONFIG_PATH], check=True)
+
     vector = one_hot_vector(args)
     assert sum(vector) == 1, (
         f"Only one argument can be given at a time. Received {sum(vector)}"
@@ -85,6 +90,8 @@ def parse(args: argparse.Namespace):
         _delete()
     elif vector[3]:
         _list()
+    elif vector[4]:
+        _config()
 
 
 def main():
@@ -98,6 +105,9 @@ def main():
     parser.add_argument("-a", "--add", action="store", help="add a feed")
     parser.add_argument("-d", "--delete", action="store", help="delete a feed")
     parser.add_argument("-l", "--list", action="store_true", help="list all feeds")
+    parser.add_argument(
+        "-c", "--config", action="store_true", help="open config file in vim"
+    )
     parser.add_argument(
         "-v", "--version", action="version", version=f"%(prog)s {__version__}"
     )
