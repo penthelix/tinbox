@@ -2,6 +2,7 @@ import argparse
 
 from tinbox import config as cfg
 from tinbox import fetch
+from tinbox.__init__ import __version__
 
 
 def one_hot_vector(args: argparse.Namespace) -> list[bool]:
@@ -96,6 +97,9 @@ def main():
     parser.add_argument("-a", "--add", action="store", help="add a feed")
     parser.add_argument("-d", "--delete", action="store", help="delete a feed")
     parser.add_argument("-l", "--list", action="store_true", help="list all feeds")
+    parser.add_argument(
+        "-v", "--version", action="version", version=f"%(prog)s {__version__}"
+    )
 
     args = parser.parse_args()
     args = validate_args(args)
