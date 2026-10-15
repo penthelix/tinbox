@@ -93,6 +93,7 @@ def main():
         description="Fetch YouTube videos from RSS feeds in your terminal.",
         epilog="Get started by adding a feed with --add",
     )
+    # If you modify this, make sure to update one_hot_vector() as well.
     parser.add_argument("-i", "--inbox", action="store_true", help="get your inbox")
     parser.add_argument("-a", "--add", action="store", help="add a feed")
     parser.add_argument("-d", "--delete", action="store", help="delete a feed")
