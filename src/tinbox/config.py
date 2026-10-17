@@ -34,7 +34,7 @@ def remove_feed(feed_name: str | None = None, feed_url: str | None = None) -> No
         )
 
     if not feed_name:
-        raise ValueError(f"Feed with URL {feed_url} not found")
+        raise FeedURLNotFoundError(f"Feed with URL {feed_url} not found")
 
     config.remove_section(f"feeds.{feed_name}")
     save_config()
@@ -60,3 +60,10 @@ def save_config() -> None:
 
     with open(CONFIG_PATH, "w") as config_file:
         config.write(config_file)
+
+
+class FeedURLNotFoundError(Exception):
+    """Exception raised when a feed URL is not found."""
+
+    def init__(self, feed_url: str) -> None:
+        super().__init__(f"Feed {feed_url} not found")
