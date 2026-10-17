@@ -3,7 +3,9 @@ from rich.table import Table
 from tinbox.types import VIDEO_FORMAT, Video
 
 
-def get_channel_table(channel_name: str, channel_videos: list[Video]) -> Table:
+def get_channel_table(
+    channel_name: str, channel_videos: list[Video], char_limit: int = 40
+) -> Table:
     """
     Returns a rich.table.Table for a channel with the videos in the channel.
 
@@ -16,7 +18,7 @@ def get_channel_table(channel_name: str, channel_videos: list[Video]) -> Table:
         table.add_column(key)
 
     for video in channel_videos:
-        table.add_row(*[str(video[key]) for key in VIDEO_FORMAT()])
+        table.add_row(*[str(video[key])[:char_limit] for key in VIDEO_FORMAT()])
 
     return table
 
