@@ -50,22 +50,19 @@ def parse(args: argparse.Namespace):
             print(video["title"])
 
     def _add():
-        config = cfg.get_config()
-        cfg.add_feed_url(config, args.add)
+        cfg.add_feed(args.add, args.add)
         print(f"Added {args.add} to your feeds.")
 
     def _delete():
         try:
-            config = cfg.get_config()
-            cfg.delete_feed_url(config, args.delete)
+            cfg.remove_feed(feed_url=args.delete)
             print(f"Deleted {args.delete} from your feeds.")
-        except cfg.URLNotFoundError:
+        except cfg.FeedURLNotFoundError:
             print(f"URL {args.delete} not found in your feeds.")
             return
 
     def _list():
-        config = cfg.get_config()
-        feeds = cfg.get_feed_urls(config)
+        feeds = cfg.list_feed_urls()
 
         if not feeds:
             print("No feeds found. Run with -h for help.")
