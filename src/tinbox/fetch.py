@@ -1,6 +1,7 @@
 import feedparser
 
 from tinbox import config as cfg
+from tinbox.types import Video
 
 _config: cfg.Config = {}
 try:
@@ -17,20 +18,20 @@ def is_valid_youtube_url(url: str) -> bool:
     return url.startswith("https://www.youtube.com/feeds/videos.xml?channel_id=")
 
 
-def fetch_videos() -> list[dict[str, str]]:
-    all_videos: list[dict[str, str]] = []
+def fetch_videos() -> list[Video]:
+    all_videos: list[Video] = []
     for url in FEED_URLS:
         videos = fetch_videos_from_channel(url)
         all_videos.extend(videos)
     return all_videos
 
 
-def fetch_videos_from_channel(feed_url: str) -> list[dict[str, str]]:
+def fetch_videos_from_channel(feed_url: str) -> list[Video]:
     feed: feedparser.FeedParserDict = feedparser.parse(feed_url)
     if not feed.entries:
         raise ValueError("No videos found in the feed.")
 
-    videos: list[dict[str, str]] = []
+    videos: list[Video] = []
 
     for entry in feed.entries:
         missing: list[str] = [
@@ -56,5 +57,5 @@ def fetch_videos_from_channel(feed_url: str) -> list[dict[str, str]]:
     return videos
 
 
-def remove_shorts(videos: list[dict[str, str]]) -> list[dict[str, str]]:
+def remove_shorts(videos: list[Video]) -> list[Video]:
     return [video for video in videos if "/shorts/" not in video["link"]]
