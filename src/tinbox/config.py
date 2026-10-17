@@ -16,7 +16,26 @@ def add_feed(feed_name: str, feed_url: str) -> None:
     save_config()
 
 
-def remove_feed(feed_name: str) -> None:
+def remove_feed(feed_name: str | None = None, feed_url: str | None = None) -> None:
+    if feed_name and feed_url:
+        raise ValueError("Only one of feed_name or feed_url can be provided")
+
+    if not feed_name and not feed_url:
+        raise ValueError("Either feed_name or feed_url must be provided")
+
+    if feed_url:
+        feed_name = next(
+            (
+                key.replace("feeds.", "")
+                for key in config.sections()
+                if config[key]["url"] == feed_url
+            ),
+            None,
+        )
+
+    if not feed_name:
+        raise ValueError(f"Feed with URL {feed_url} not found")
+
     config.remove_section(f"feeds.{feed_name}")
     save_config()
 
