@@ -16,7 +16,7 @@ def get_channel_table(channel_name: str, channel_videos: list[Video]) -> Table:
         table.add_column(key)
 
     for video in channel_videos:
-        table.add_row(*[str(getattr(video, key)) for key in VIDEO_FORMAT()])
+        table.add_row(*[str(video[key]) for key in VIDEO_FORMAT()])
 
     return table
 
