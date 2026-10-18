@@ -1,6 +1,6 @@
 from rich.table import Table
 
-from tinbox.types import VIDEO_FORMAT, Video
+from tinbox.types import Video, VideoFormat
 
 
 def get_channel_table(
@@ -14,11 +14,11 @@ def get_channel_table(
     """
     table = Table(title=channel_name)
 
-    for key in VIDEO_FORMAT():
+    for key in VideoFormat():
         table.add_column(key)
 
     for video in channel_videos:
-        table.add_row(*[str(video[key])[:char_limit] for key in VIDEO_FORMAT()])
+        table.add_row(*[str(video[key])[:char_limit] for key in VideoFormat()])
 
     return table
 
