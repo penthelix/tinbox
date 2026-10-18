@@ -1,9 +1,14 @@
 import argparse
 import subprocess
 
+from rich.console import Console
+from rich.table import Table
+
 from tinbox import config as cfg
 from tinbox import fetch
 from tinbox.__init__ import __version__
+from tinbox.tables import get_channel_table
+from tinbox.types import Video
 
 
 def one_hot_vector(args: argparse.Namespace) -> list[bool]:
@@ -38,16 +43,17 @@ def validate_args(args) -> argparse.Namespace:
 
 def parse(args: argparse.Namespace):
     def _inbox():
-        videos = fetch.fetch_videos()
-        videos = fetch.remove_shorts(videos)
-
-        if len(videos) == 0:
-            print("No videos in inbox. Run with -h for help.")
-            return
-
-        print(f"Found {len(videos)} videos from {len(fetch.FEED_URLS)} feeds.")
-        for video in videos:
-            print(video["title"])
+        tables: list[Table] = []
+        console = Console()
+        for url in fetch.FEED_URLS:
+            videos: list[Video] = fetch.remove_shorts(
+                fetch.fetch_videos_from_channel(url)
+            )
+            if len(videos) == 0:
+                continue
+            tables.append(get_channel_table(url, videos))
+        for table in tables:
+            console.print(table)
 
     def _add():
         config = cfg.get_config()
