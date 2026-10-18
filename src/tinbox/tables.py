@@ -4,18 +4,32 @@ from tinbox.types import Video, VideoFormat
 
 
 def get_channel_table(
-    channel_name: str, channel_videos: list[Video], char_limit: int = 40
+    channel_name: str,
+    channel_videos: list[Video],
+    char_limit: int = 40,
+    colors: VideoFormat | None = None,
 ) -> Table:
     """
     Returns a rich.table.Table for a channel with the videos in the channel.
 
     The columns are the keys of the VIDEO_FORMAT dictionary. The rows are the videos in
     the channel.
+
+    Args:
+        channel_name (str): Title of the table
+        channel_videos (list[Video]): The rows of the table
+        char_limit (int, optional): The maximum number of characters to display in a
+            cell. Defaults to 40.
+        colors (VideoFormat, optional): The colors to use for the columns. Defaults
+            to None (no colors)
     """
+    if not colors:
+        colors = VideoFormat()
+
     table = Table(title=channel_name)
 
     for key in VideoFormat():
-        table.add_column(key)
+        table.add_column(key, style=colors[key])
 
     for video in channel_videos:
         table.add_row(*[str(video[key])[:char_limit] for key in VideoFormat()])
