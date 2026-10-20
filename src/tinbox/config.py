@@ -1,6 +1,8 @@
 import configparser
 from pathlib import Path
 
+from tinbox.defaults import TABLE_COLORS
+
 CONFIG_PATH: Path = Path.home() / ".config" / "tinbox" / "config.ini"
 config = configparser.ConfigParser()
 
@@ -8,6 +10,7 @@ config = configparser.ConfigParser()
 def init_config() -> None:
     global config
     config = configparser.ConfigParser()
+    config["DEFAULT.tableColors"] = TABLE_COLORS
     save_config()
 
 
