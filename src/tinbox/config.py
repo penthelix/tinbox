@@ -1,7 +1,10 @@
 import configparser
 from pathlib import Path
+from typing import cast
 
 from tinbox.defaults import TABLE_COLORS
+from tinbox.helper import is_hex_code
+from tinbox.types import VideoFormat
 
 CONFIG_PATH: Path = Path.home() / ".config" / "tinbox" / "config.ini"
 config = configparser.ConfigParser()
@@ -57,6 +60,18 @@ def list_feed_urls() -> set[str]:
     return {config[key]["url"] for key in config.sections() if key.startswith("feeds.")}
 
 
+def get_table_colors() -> VideoFormat:
+    try:
+        colors = cast(VideoFormat, config["DEFAULT.tableColors"])
+    except KeyError:
+        config["DEFAULT.tableColors"] = TABLE_COLORS
+        colors = TABLE_COLORS
+    for code in colors.values():
+        if not is_hex_code(code):
+            raise BrokenConfigError(f"Invalid color code: {code}")
+    return colors
+
+
 def save_config() -> None:
     if not CONFIG_PATH.parent.exists():
         CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -70,3 +85,10 @@ class FeedURLNotFoundError(Exception):
 
     def init__(self, feed_url: str) -> None:
         super().__init__(f"Feed {feed_url} not found")
+
+
+class BrokenConfigError(Exception):
+    """Exception raised when the config file is broken."""
+
+    def init__(self, message: str) -> None:
+        super().__init__(f"Config file is broken: {message}")

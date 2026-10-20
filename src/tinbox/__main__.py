@@ -51,7 +51,7 @@ def parse(args: argparse.Namespace):
             )
             if len(videos) == 0:
                 continue
-            tables.append(get_channel_table(url, videos))
+            tables.append(get_channel_table(url, videos, colors=cfg.get_table_colors()))
         for table in tables:
             console.print(table)
 
