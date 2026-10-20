@@ -1,7 +1,7 @@
 import feedparser
 
 from tinbox import config
-from tinbox.types import VIDEO_FORMAT, Video
+from tinbox.types import Video, VideoFormat
 
 FEED_URLS: set[str] = config.list_feed_urls()
 
@@ -27,7 +27,7 @@ def fetch_videos_from_channel(feed_url: str) -> list[Video]:
 
     for entry in feed.entries:
         missing: list[str] = [
-            field for field in VIDEO_FORMAT() if not getattr(entry, field, None)
+            field for field in VideoFormat() if not getattr(entry, field, None)
         ]
         if missing:
             raise ValueError(
