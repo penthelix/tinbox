@@ -13,7 +13,7 @@ config = configparser.ConfigParser()
 def init_config() -> None:
     global config
     config = configparser.ConfigParser()
-    config["DEFAULT.tableColors"] = TABLE_COLORS
+    config["DEFAULT.tableColors"] = cast(dict[str, str], TABLE_COLORS)
     save_config()
 
 
@@ -64,10 +64,10 @@ def get_table_colors() -> VideoFormat:
     try:
         colors = cast(VideoFormat, config["DEFAULT.tableColors"])
     except KeyError:
-        config["DEFAULT.tableColors"] = TABLE_COLORS
+        config["DEFAULT.tableColors"] = cast(dict[str, str], TABLE_COLORS)
         colors = TABLE_COLORS
     for code in colors.values():
-        if not is_hex_code(code):
+        if not is_hex_code(str(code)):
             raise BrokenConfigError(f"Invalid color code: {code}")
     return colors
 
