@@ -6,6 +6,11 @@ T = TypeVar("T")
 
 
 class VideoFormat[T](dict[str, T | None]):
+    """
+    Represents a video format. Do not use this to represent actual fetched Video data.
+    For that, use Video instead.
+    """
+
     def __init__(
         self,
         title: T | None = None,
