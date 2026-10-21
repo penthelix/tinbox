@@ -12,6 +12,7 @@ scripts = { tinbox = "tinbox.__main__:main" }
 
 [dependency-groups]
 dev = [
+    "basedpyright>=1.40.2",
     "pyinstaller>=6.22.0",
     "pytest>=9.1.1",
     "tinbox",
