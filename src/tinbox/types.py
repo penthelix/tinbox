@@ -29,3 +29,14 @@ class VideoFormat[T](dict[str, T | None]):
             link=link,
             published=published,
         )
+
+    def to_string_dict(self) -> dict[str, str]:
+        try:
+            return {
+                "title": str(self["title"]),
+                "description": str(self["description"]),
+                "link": str(self["link"]),
+                "published": str(self["published"]),
+            }
+        except TypeError:
+            raise TypeError("Cannot convert to string dict")

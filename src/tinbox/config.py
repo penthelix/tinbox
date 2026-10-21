@@ -2,7 +2,7 @@ import configparser
 from pathlib import Path
 from typing import cast
 
-from tinbox.defaults import TABLE_COLORS
+from tinbox.defaults import TABLE_COLORS, TABLE_COLS
 from tinbox.helper import is_hex_code
 from tinbox.types import VideoFormat
 
@@ -13,7 +13,9 @@ config = configparser.ConfigParser()
 def init_config() -> None:
     global config
     config = configparser.ConfigParser()
-    config["DEFAULT.tableColors"] = cast(dict[str, str], TABLE_COLORS)
+    config["tableColors"] = TABLE_COLORS.to_string_dict()
+    config["colWidths"] = TABLE_COLS.to_string_dict()
+
     save_config()
 
 
@@ -60,9 +62,9 @@ def list_feed_urls() -> set[str]:
     return {config[key]["url"] for key in config.sections() if key.startswith("feeds.")}
 
 
-def get_table_colors() -> VideoFormat:
+def get_table_colors() -> VideoFormat[str]:
     try:
-        colors = cast(VideoFormat, config["DEFAULT.tableColors"])
+        colors = VideoFormat(**config["DEFAULT.tableColors"], val_type=str)
     except KeyError:
         config["DEFAULT.tableColors"] = cast(dict[str, str], TABLE_COLORS)
         colors = TABLE_COLORS
