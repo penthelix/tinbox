@@ -64,9 +64,9 @@ def list_feed_urls() -> set[str]:
 
 def get_table_colors() -> VideoFormat[str]:
     try:
-        colors = VideoFormat(**config["DEFAULT.tableColors"], val_type=str)
+        colors = VideoFormat(**config["tableColors"], val_type=str)
     except KeyError:
-        config["DEFAULT.tableColors"] = cast(dict[str, str], TABLE_COLORS)
+        config["tableColors"] = cast(dict[str, str], TABLE_COLORS)
         colors = TABLE_COLORS
     for code in colors.values():
         if not is_hex_code(str(code)):
