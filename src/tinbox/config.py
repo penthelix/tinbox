@@ -74,6 +74,17 @@ def get_table_colors() -> VideoFormat[str]:
     return colors
 
 
+def get_table_cols() -> VideoFormat[int]:
+    try:
+        keys = config["colWidths"].keys()
+        vals = map(int, config["colWidths"].values())
+        cols = VideoFormat(**dict(zip(keys, vals)), val_type=int)
+    except KeyError:
+        config["colWidths"] = cast(dict[str, str], TABLE_COLS.to_string_dict())
+        cols = TABLE_COLS
+    return cols
+
+
 def save_config() -> None:
     if not CONFIG_PATH.parent.exists():
         CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
