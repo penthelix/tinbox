@@ -84,6 +84,8 @@ def parse(args: argparse.Namespace):
         print(f"Your feeds: {feeds}")
 
     def _config():
+        if not cfg.CONFIG_PATH.exists():
+            cfg.init_config()
         subprocess.run(["vim", cfg.CONFIG_PATH], check=True)
 
     vector = one_hot_vector(args)
