@@ -8,7 +8,7 @@ def get_channel_table(
     channel_name: str,
     channel_videos: list[Video],
     char_limit: VideoFormat[int] = TABLE_COLS,
-    colors: VideoFormat = TABLE_COLORS,
+    colors: VideoFormat[str] = TABLE_COLORS,
 ) -> Table:
     """
     Returns a rich.table.Table for a channel with the videos in the channel.
