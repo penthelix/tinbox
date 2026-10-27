@@ -51,7 +51,14 @@ def parse(args: argparse.Namespace):
             )
             if len(videos) == 0:
                 continue
-            tables.append(get_channel_table(url, videos, colors=cfg.get_table_colors()))
+            tables.append(
+                get_channel_table(
+                    url,
+                    videos,
+                    char_limit=cfg.get_table_cols(),
+                    colors=cfg.get_table_colors(),
+                )
+            )
         for table in tables:
             console.print(table)
 
@@ -77,6 +84,8 @@ def parse(args: argparse.Namespace):
         print(f"Your feeds: {feeds}")
 
     def _config():
+        if not cfg.CONFIG_PATH.exists():
+            cfg.init_config()
         subprocess.run(["vim", cfg.CONFIG_PATH], check=True)
 
     vector = one_hot_vector(args)
