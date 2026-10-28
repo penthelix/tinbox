@@ -60,3 +60,13 @@ class VideoFormat[T](dict[str, T | None]):
             }
         except TypeError:
             raise TypeError("Cannot convert to string dict")
+
+    def get_true_values(self) -> set[str]:
+        if not self.type == bool:
+            raise TypeError("Cannot get true values from non-bool type")
+        return {key for key, value in self.items() if value}
+
+    def get_false_values(self) -> set[str]:
+        if not self.type == bool:
+            raise TypeError("Cannot get true values from non-bool type")
+        return {key for key, value in self.items() if not value}

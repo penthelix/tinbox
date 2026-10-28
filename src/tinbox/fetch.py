@@ -1,7 +1,8 @@
 import feedparser
 
 from tinbox import config
-from tinbox.types import Video, VideoFormat
+from tinbox.defaults import MANDATORY_FIELDS
+from tinbox.types import Video
 
 FEED_URLS: set[str] = config.list_feed_urls()
 
@@ -26,9 +27,14 @@ def fetch_videos_from_channel(feed_url: str) -> list[Video]:
     videos: list[Video] = []
 
     for entry in feed.entries:
-        missing: list[str] = [
-            field for field in VideoFormat() if not getattr(entry, field, None)
-        ]
+        for field in MANDATORY_FIELDS.get_false_values():
+            if not getattr(entry, field, None):
+                setattr(entry, field, "")
+        missing: set[str] = {
+            field
+            for field in MANDATORY_FIELDS.get_true_values()
+            if not getattr(entry, field, None)
+        }
         if missing:
             raise ValueError(
                 "Entry is missing required fields: "

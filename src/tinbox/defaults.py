@@ -14,3 +14,11 @@ TABLE_COLS = VideoFormat(
     published=40,
     val_type=int,
 )
+
+MANDATORY_FIELDS = VideoFormat(
+    title=True,
+    description=False,
+    link=True,
+    published=False,
+    val_type=bool,
+)
