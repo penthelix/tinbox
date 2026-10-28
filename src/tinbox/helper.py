@@ -12,3 +12,12 @@ def is_hex_code(s: str) -> bool:
         if not (char.isdigit() or char.lower() in "abcdef"):
             return False
     return True
+
+
+def sanitized_filename(s: str) -> str:
+    keep_chars = {"-", "_", "(", ")"}
+    return (
+        "".join(c for c in s if c.isalpha() or c.isdigit() or c in keep_chars)
+        .rstrip()
+        .replace(" ", "_")
+    )

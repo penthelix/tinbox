@@ -7,6 +7,7 @@ from rich.table import Table
 from tinbox import config as cfg
 from tinbox import fetch
 from tinbox.__init__ import __version__
+from tinbox.cache import save_videos_to_cache
 from tinbox.tables import get_channel_table
 from tinbox.types import Video
 
@@ -59,6 +60,7 @@ def parse(args: argparse.Namespace):
                     colors=cfg.get_table_colors(),
                 )
             )
+            save_videos_to_cache(videos, url)
         for table in tables:
             console.print(table)
 

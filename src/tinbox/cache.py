@@ -4,6 +4,7 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 
+from tinbox.helper import sanitized_filename
 from tinbox.types import Video
 
 CACHE_PATH = Path()
@@ -19,10 +20,13 @@ match platform.system():
 
 
 def save_videos_to_cache(videos: list[Video], channel_name: str) -> bool:
+    channel_name = sanitized_filename(channel_name)
     cache_fname: str = (
         f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}_{channel_name}_videos"
     )
     cache_path = CACHE_PATH / f"{cache_fname}.json"
+    if not CACHE_PATH.exists():
+        CACHE_PATH.mkdir(parents=True)
     with open(cache_path, "w") as f:
         json.dump(videos, f, indent=2)
     return True
