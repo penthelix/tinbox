@@ -1,4 +1,9 @@
+from datetime import timedelta
+
 from tinbox.types import VideoFormat
+
+CACHE_VACCUUM_TIME: timedelta = timedelta(days=30)
+CACHE_DATE_FORMAT: str = "%Y-%m-%d-%H-%M-%S"
 
 TABLE_COLORS = VideoFormat(
     title="#ffffff",

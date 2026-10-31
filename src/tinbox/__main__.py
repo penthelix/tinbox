@@ -7,7 +7,7 @@ from rich.table import Table
 from tinbox import config as cfg
 from tinbox import fetch
 from tinbox.__init__ import __version__
-from tinbox.cache import save_videos_to_cache
+from tinbox.cache import clear_cache, prune_cache, save_videos_to_cache
 from tinbox.tables import get_channel_table
 from tinbox.types import Video
 
@@ -20,6 +20,7 @@ def one_hot_vector(args: argparse.Namespace) -> list[bool]:
         not args.delete is None,
         args.list,
         args.config,
+        not args.cache is None,
     ]
 
 
@@ -90,6 +91,15 @@ def parse(args: argparse.Namespace):
             cfg.init_config()
         subprocess.run(["vim", cfg.CONFIG_PATH], check=True)
 
+    def _cache():
+        match args.cache:
+            case "prune":
+                prune_cache()
+            case "clear":
+                clear_cache()
+            case _:
+                raise ValueError(f"[error]: unrecognized command {args.cache}")
+
     vector = one_hot_vector(args)
     assert sum(vector) == 1, (
         f"Only one argument can be given at a time. Received {sum(vector)}"
@@ -106,6 +116,8 @@ def parse(args: argparse.Namespace):
         _list()
     elif vector[4]:
         _config()
+    elif vector[5]:
+        _cache()
 
 
 def main():
@@ -125,6 +137,7 @@ def main():
     parser.add_argument(
         "-v", "--version", action="version", version=f"%(prog)s {__version__}"
     )
+    parser.add_argument("--cache", action="store", help="use/prune/clear cache")
 
     args = parser.parse_args()
     args = validate_args(args)
