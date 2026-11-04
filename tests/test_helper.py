@@ -1,4 +1,11 @@
-from tinbox.helper import is_hex_code
+from tinbox.helper import is_hex_code, is_valid_youtube_url
+
+
+def test_is_valid_youtube_url():
+    assert is_valid_youtube_url(
+        "https://www.youtube.com/feeds/videos.xml?channel_id=afhjkvbsa"
+    )
+    assert not is_valid_youtube_url("https://www.youtube.com/watch?v=abc123")
 
 
 def test_is_hex_code():

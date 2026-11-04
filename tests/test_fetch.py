@@ -2,7 +2,6 @@ from src.tinbox.fetch import (
     FEED_URLS,
     fetch_videos,
     fetch_videos_from_channel,
-    is_valid_youtube_url,
     remove_shorts,
 )
 
@@ -13,13 +12,6 @@ def test_main():
         assert isinstance(url, str)
         assert url.startswith("https://www.youtube.com/feeds/videos.xml?")
         assert "channel_id=" in url
-
-
-def test_is_valid_youtube_url():
-    assert is_valid_youtube_url(
-        "https://www.youtube.com/feeds/videos.xml?channel_id=afhjkvbsa"
-    )
-    assert not is_valid_youtube_url("https://www.youtube.com/watch?v=abc123")
 
 
 def validate_videos_format(videos: list[dict[str, str]]) -> None:

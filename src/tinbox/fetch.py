@@ -7,10 +7,6 @@ from tinbox.types import Video
 FEED_URLS: set[str] = config.list_feed_urls()
 
 
-def is_valid_youtube_url(url: str) -> bool:
-    return url.startswith("https://www.youtube.com/feeds/videos.xml?channel_id=")
-
-
 def fetch_videos() -> list[Video]:
     all_videos: list[Video] = []
     for url in FEED_URLS:

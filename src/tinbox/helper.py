@@ -1,3 +1,7 @@
+def is_valid_youtube_url(url: str) -> bool:
+    return url.startswith("https://www.youtube.com/feeds/videos.xml?channel_id=")
+
+
 def is_hex_code(s: str) -> bool:
     """
     Returns True if the string is a valid hex code with a leading hash, False otherwise.
