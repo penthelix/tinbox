@@ -28,7 +28,7 @@ get_cache_name_now: Callable[[str], str] = lambda channel_name: get_cache_name(
 )
 get_date_from_cache: Callable[[str], datetime] = lambda s: datetime.strptime(
     s[: s.find("_")], CACHE_DATE_FORMAT
-)
+).replace(tzinfo=UTC)
 get_age_from_cache: Callable[[str], timedelta] = lambda s: (
     datetime.now(UTC) - get_date_from_cache(s)
 )
