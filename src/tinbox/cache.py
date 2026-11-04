@@ -63,5 +63,7 @@ def prune_cache() -> bool:
         lambda cache: cache[2] >= CACHE_VACCUUM_TIME, all_caches
     )
     old_cache_files: list[Path] = [cache[0] for cache in old_caches]
+    if not old_cache_files:
+        return False
     _ = subprocess.run(["rm", *old_cache_files], check=True)
     return True

@@ -94,7 +94,11 @@ def parse(args: argparse.Namespace):
     def _cache():
         match args.cache:
             case "prune":
-                prune_cache()
+                pruned: bool = prune_cache()
+                if pruned:
+                    print("Pruned cache.")
+                else:
+                    print("Cache is already pruned.")
             case "clear":
                 clear_cache()
             case _:
