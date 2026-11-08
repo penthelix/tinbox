@@ -32,10 +32,13 @@ def remove_feed(feed_name: str | None = None, feed_url: str | None = None) -> No
         raise ValueError("Either feed_name or feed_url must be provided")
 
     if feed_url:
+        feed_sections: list[str] = [
+            key for key in config.sections() if key.startswith("feeds.")
+        ]
         feed_name = next(
             (
                 key.replace("feeds.", "")
-                for key in config.sections()
+                for key in feed_sections
                 if config[key]["url"] == feed_url
             ),
             None,
