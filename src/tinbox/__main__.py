@@ -142,7 +142,7 @@ def main():
     parser.add_argument(
         "-v", "--version", action="version", version=f"%(prog)s {__version__}"
     )
-    parser.add_argument("--cache", action="store", help="use/prune/clear cache")
+    parser.add_argument("--cache", action="store", help="prune/clear cache")
 
     args = parser.parse_args()
     args = validate_args(args)
