@@ -101,8 +101,9 @@ def parse(args: argparse.Namespace):
                     print("Cache is already pruned.")
             case "clear":
                 clear_cache()
+                print("Cleared cache.")
             case _:
-                raise ValueError(f"[error]: unrecognized command {args.cache}")
+                print(f"[error]: unrecognized command {args.cache}")
 
     vector = one_hot_vector(args)
     assert sum(vector) == 1, (
