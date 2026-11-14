@@ -24,22 +24,21 @@ def one_hot_vector(args: argparse.Namespace) -> list[bool]:
     ]
 
 
-def validate_args(args) -> argparse.Namespace:
+def validated_args(args: argparse.Namespace) -> argparse.Namespace:
     assert isinstance(args.inbox, bool), f"args.inbox is {type(args.inbox)}"
     assert isinstance(args.add, str | None), f"args.add is {type(args.add)}"
     assert isinstance(args.delete, str | None), f"args.delete is {type(args.delete)}"
     assert isinstance(args.list, bool), f"args.list is {type(args.list)}"
+    assert isinstance(args.config, bool), f"args.config is {type(args.config)}"
+    assert isinstance(args.cache, str | None), f"args.cache is {type(args.cache)}"
 
-    is_arg_given = one_hot_vector(args)
-
-    if sum(is_arg_given) > 1:
+    vector = one_hot_vector(args)
+    if sum(vector) > 1:
         raise ValueError(
-            f"Only one argument can be given at a time. Received {sum(is_arg_given)}."
+            f"Only one argument can be given at a time. Received {sum(vector)}."
         )
-
-    if sum(is_arg_given) == 0:
+    if sum(vector) == 0:
         args.inbox = True
-
     return args
 
 
@@ -79,11 +78,9 @@ def parse(args: argparse.Namespace):
 
     def _list():
         feeds = cfg.list_feed_urls()
-
         if not feeds:
             print("No feeds found. Run with -h for help.")
             return
-
         print(f"Your feeds: {feeds}")
 
     def _config():
@@ -145,7 +142,7 @@ def main():
     parser.add_argument("--cache", action="store", help="prune/clear cache")
 
     args = parser.parse_args()
-    args = validate_args(args)
+    args = validated_args(args)
     parse(args)
 
 
