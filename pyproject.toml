@@ -7,6 +7,7 @@ dependencies = [
     "configparser>=7.2.0",
     "feedparser==6.0.13",
     "feedparser-sgmllib==1.0.0",
+    "rich>=15.0.0",
 ]
 scripts = { tinbox = "tinbox.__main__:main" }
 
