@@ -43,3 +43,16 @@ def get_feed_tables(feed: dict[str, list[Video]]) -> list[Table]:
     return [
         get_channel_table(channel_name, videos) for channel_name, videos in feed.items()
     ]
+
+
+def get_feed_list_table(feed_names: set[str], feed_urls: set[str]) -> Table:
+    if len(feed_names) != len(feed_urls):
+        raise ValueError("feed_names and feed_urls must be the same length")
+    if len(feed_names) == 0:
+        raise ValueError("Feeds must not be empty")
+    table = Table()
+    for key in ["Name", "URL"]:
+        table.add_column(key)
+    for name, url in zip(feed_names, feed_urls):
+        table.add_row(name, url)
+    return table

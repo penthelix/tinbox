@@ -8,7 +8,7 @@ from tinbox import config as cfg
 from tinbox import fetch
 from tinbox.__init__ import __version__
 from tinbox.cache import clear_cache, prune_cache, save_videos_to_cache
-from tinbox.tables import get_channel_table
+from tinbox.tables import get_channel_table, get_feed_list_table
 from tinbox.types import Video
 
 
@@ -26,7 +26,13 @@ def one_hot_vector(args: argparse.Namespace) -> list[bool]:
 
 def validated_args(args: argparse.Namespace) -> argparse.Namespace:
     assert isinstance(args.inbox, bool), f"args.inbox is {type(args.inbox)}"
-    assert isinstance(args.add, str | None), f"args.add is {type(args.add)}"
+    assert isinstance(args.add, list | None), f"args.add is {type(args.add)}"
+    if args.add:
+        assert len(args.add) == 2 if args.add is not None else True, (
+            f"args.add has length {len(args.add)}"
+        )
+        for i in args.add:
+            assert isinstance(i, str), f"args.add[{i}] is {type(i)} instead of str"
     assert isinstance(args.delete, str | None), f"args.delete is {type(args.delete)}"
     assert isinstance(args.list, bool), f"args.list is {type(args.list)}"
     assert isinstance(args.config, bool), f"args.config is {type(args.config)}"
@@ -46,7 +52,7 @@ def parse(args: argparse.Namespace):
     def _inbox():
         tables: list[Table] = []
         console = Console()
-        for url in fetch.FEED_URLS:
+        for channel_name, url in zip(fetch.FEED_NAMES, fetch.FEED_URLS):
             videos: list[Video] = fetch.remove_shorts(
                 fetch.fetch_videos_from_channel(url)
             )
@@ -54,7 +60,7 @@ def parse(args: argparse.Namespace):
                 continue
             tables.append(
                 get_channel_table(
-                    url,
+                    channel_name,
                     videos,
                     char_limit=cfg.get_table_cols(),
                     colors=cfg.get_table_colors(),
@@ -65,23 +71,24 @@ def parse(args: argparse.Namespace):
             console.print(table)
 
     def _add():
-        cfg.add_feed(args.add, args.add)
+        cfg.add_feed(args.add[0], args.add[1])
         print(f"Added {args.add} to your feeds.")
 
     def _delete():
         try:
-            cfg.remove_feed(feed_url=args.delete)
+            cfg.remove_feed(feed_name=args.delete)
             print(f"Deleted {args.delete} from your feeds.")
-        except cfg.FeedURLNotFoundError:
-            print(f"URL {args.delete} not found in your feeds.")
+        except cfg.FeedNameNotFoundError:
+            print(f"Feed name {args.delete} not found in your feeds.")
             return
 
     def _list():
-        feeds = cfg.list_feed_urls()
-        if not feeds:
+        if not fetch.FEED_NAMES:
             print("No feeds found. Run with -h for help.")
             return
-        print(f"Your feeds: {feeds}")
+        table: Table = get_feed_list_table(fetch.FEED_NAMES, fetch.FEED_URLS)
+        console = Console()
+        console.print(table)
 
     def _config():
         if not cfg.CONFIG_PATH.exists():
@@ -130,7 +137,7 @@ def main():
     )
     # If you modify this, make sure to update one_hot_vector() as well.
     parser.add_argument("-i", "--inbox", action="store_true", help="get your inbox")
-    parser.add_argument("-a", "--add", action="store", help="add a feed")
+    parser.add_argument("-a", "--add", action="extend", nargs="+", help="add a feed")
     parser.add_argument("-d", "--delete", action="store", help="delete a feed")
     parser.add_argument("-l", "--list", action="store_true", help="list all feeds")
     parser.add_argument(

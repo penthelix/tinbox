@@ -4,6 +4,7 @@ from tinbox import config
 from tinbox.defaults import MANDATORY_FIELDS
 from tinbox.types import Video
 
+FEED_NAMES: set[str] = config.list_feed_names()
 FEED_URLS: set[str] = config.list_feed_urls()
 
 

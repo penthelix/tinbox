@@ -27,11 +27,9 @@ def add_feed(feed_name: str, feed_url: str) -> None:
 def remove_feed(feed_name: str | None = None, feed_url: str | None = None) -> None:
     if feed_name and feed_url:
         raise ValueError("Only one of feed_name or feed_url can be provided")
-
     if not feed_name and not feed_url:
         raise ValueError("Either feed_name or feed_url must be provided")
-
-    if feed_url:
+    if not feed_name:
         feed_sections: list[str] = [
             key for key in config.sections() if key.startswith("feeds.")
         ]
@@ -43,10 +41,8 @@ def remove_feed(feed_name: str | None = None, feed_url: str | None = None) -> No
             ),
             None,
         )
-
     if not feed_name:
         raise FeedURLNotFoundError(f"Feed with URL {feed_url} not found")
-
     config.remove_section(f"feeds.{feed_name}")
     save_config()
 
@@ -94,6 +90,13 @@ def save_config() -> None:
 
     with open(CONFIG_PATH, "w") as config_file:
         config.write(config_file)
+
+
+class FeedNameNotFoundError(Exception):
+    """Exception raised when a feed name is not found."""
+
+    def init__(self, feed_name: str) -> None:
+        super().__init__(f"Feed {feed_name} not found")
 
 
 class FeedURLNotFoundError(Exception):
