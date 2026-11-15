@@ -1,15 +1,17 @@
 import argparse
-import subprocess
 
-from rich.console import Console
-from rich.table import Table
-
-from tinbox import config as cfg
-from tinbox import fetch
+from tinbox import commands
 from tinbox.__init__ import __version__
-from tinbox.cache import clear_cache, prune_cache, save_videos_to_cache
-from tinbox.tables import get_channel_table, get_feed_list_table
-from tinbox.types import Video
+
+# If you modify this, make sure to update one_hot_vector() as well.
+ARGS_TEMPLATE = (
+    {"name": "inbox", "type": bool, "func": commands._inbox},
+    {"name": "add", "type": [str, str], "func": commands._add},
+    {"name": "delete", "type": str, "func": commands._delete},
+    {"name": "list", "type": bool, "func": commands._list},
+    {"name": "config", "type": bool, "func": commands._config},
+    {"name": "cache", "type": str, "func": commands._cache},
+)
 
 
 def one_hot_vector(args: argparse.Namespace) -> list[bool]:
@@ -49,81 +51,11 @@ def validated_args(args: argparse.Namespace) -> argparse.Namespace:
 
 
 def parse(args: argparse.Namespace):
-    def _inbox():
-        tables: list[Table] = []
-        console = Console()
-        for channel_name, url in zip(fetch.FEED_NAMES, fetch.FEED_URLS):
-            videos: list[Video] = fetch.remove_shorts(
-                fetch.fetch_videos_from_channel(url)
-            )
-            if len(videos) == 0:
-                continue
-            tables.append(
-                get_channel_table(
-                    channel_name,
-                    videos,
-                    char_limit=cfg.get_table_cols(),
-                    colors=cfg.get_table_colors(),
-                )
-            )
-            save_videos_to_cache(videos, url)
-        for table in tables:
-            console.print(table)
-
-    def _add():
-        cfg.add_feed(args.add[0], args.add[1])
-        print(f"Added {args.add} to your feeds.")
-
-    def _delete():
-        try:
-            cfg.remove_feed(feed_name=args.delete)
-            print(f"Deleted {args.delete} from your feeds.")
-        except cfg.FeedNameNotFoundError:
-            print(f"Feed name {args.delete} not found in your feeds.")
-            return
-
-    def _list():
-        if not fetch.FEED_NAMES:
-            print("No feeds found. Run with -h for help.")
-            return
-        table: Table = get_feed_list_table(fetch.FEED_NAMES, fetch.FEED_URLS)
-        console = Console()
-        console.print(table)
-
-    def _config():
-        if not cfg.CONFIG_PATH.exists():
-            cfg.init_config()
-        subprocess.run(["vim", cfg.CONFIG_PATH], check=True)
-
-    def _cache():
-        match args.cache:
-            case "prune":
-                pruned: bool = prune_cache()
-                if pruned:
-                    print("Pruned cache.")
-                else:
-                    print("Cache is already pruned.")
-            case "clear":
-                clear_cache()
-                print("Cleared cache.")
-            case _:
-                print(f"[error]: unrecognized command {args.cache}")
-
-    # If you modify this, make sure to update one_hot_vector() as well.
-    ARGS_TEMPLATE = (
-        {"name": "inbox", "type": bool, "func": _inbox},
-        {"name": "add", "type": [str, str], "func": _add},
-        {"name": "delete", "type": str, "func": _delete},
-        {"name": "list", "type": bool, "func": _list},
-        {"name": "config", "type": bool, "func": _config},
-        {"name": "cache", "type": str, "func": _cache},
-    )
-
     vector = one_hot_vector(args)
     assert sum(vector) == 1, (
         f"Only one argument can be given at a time. Received {sum(vector)}"
     )
-    ARGS_TEMPLATE[vector.index(True)]["func"]()
+    ARGS_TEMPLATE[vector.index(True)]["func"](args)
 
 
 def main():
