@@ -109,24 +109,21 @@ def parse(args: argparse.Namespace):
             case _:
                 print(f"[error]: unrecognized command {args.cache}")
 
+    # If you modify this, make sure to update one_hot_vector() as well.
+    ARGS_TEMPLATE = (
+        {"name": "inbox", "type": bool, "func": _inbox},
+        {"name": "add", "type": [str, str], "func": _add},
+        {"name": "delete", "type": str, "func": _delete},
+        {"name": "list", "type": bool, "func": _list},
+        {"name": "config", "type": bool, "func": _config},
+        {"name": "cache", "type": str, "func": _cache},
+    )
+
     vector = one_hot_vector(args)
     assert sum(vector) == 1, (
         f"Only one argument can be given at a time. Received {sum(vector)}"
     )
-
-    # If you modify this, make sure to update one_hot_vector() as well.
-    if vector[0]:
-        _inbox()
-    elif vector[1]:
-        _add()
-    elif vector[2]:
-        _delete()
-    elif vector[3]:
-        _list()
-    elif vector[4]:
-        _config()
-    elif vector[5]:
-        _cache()
+    ARGS_TEMPLATE[vector.index(True)]["func"]()
 
 
 def main():
