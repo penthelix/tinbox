@@ -9,16 +9,16 @@ from tinbox.defaults import CACHE_DATE_FORMAT, CACHE_VACCUUM_TIME
 from tinbox.helper import sanitized_filename
 from tinbox.types import Video
 
-CACHE_PATH = Path()
 match platform.system():
     case "Windows":
         CACHE_PATH = Path.home() / "AppData" / "Local" / "tinbox"
     case "Linux":
-        CACHE_PATH = Path.home() / ".cache" / "tinbox"
+        CACHE_PATH = Path.home() / ".cache" / "tinbox"  # pyright: ignore[reportConstantRedefinition]
     case "Darwin":
-        CACHE_PATH = Path.home() / "Library" / "Caches" / "tinbox"
+        CACHE_PATH = Path.home() / "Library" / "Caches" / "tinbox"  # pyright: ignore[reportConstantRedefinition]
     case _:
         raise NotImplementedError(f"Unsupported platform: {platform.system()}")
+
 
 get_cache_name: Callable[[str, datetime], str] = lambda channel_name, ts: (
     f"{ts.strftime(CACHE_DATE_FORMAT)}_{channel_name}_videos"
