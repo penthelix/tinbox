@@ -137,7 +137,7 @@ def main():
     )
     # If you modify this, make sure to update one_hot_vector() as well.
     parser.add_argument("-i", "--inbox", action="store_true", help="get your inbox")
-    parser.add_argument("-a", "--add", action="extend", nargs="+", help="add a feed")
+    parser.add_argument("-a", "--add", action="extend", nargs=2, help="add a feed")
     parser.add_argument("-d", "--delete", action="store", help="delete a feed")
     parser.add_argument("-l", "--list", action="store_true", help="list all feeds")
     parser.add_argument(
