@@ -15,9 +15,9 @@ def is_hex_code(s: str) -> bool:
 
 
 def sanitized_filename(s: str) -> str:
-    keep_chars = {"-", "_", "(", ")"}
-    return (
-        "".join(c for c in s if c.isalpha() or c.isdigit() or c in keep_chars)
-        .rstrip()
-        .replace(" ", "_")
-    )
+    """
+    Return a sanitized string by retaining only alphanumeric characters, parentheses,
+    hyphens, and underscores.
+    """
+    keep_chars = {"(", ")", "-", "_"}  # The order of chars is from string.whitespace
+    return "".join(c for c in s if c.isalpha() or c.isdigit() or c in keep_chars)
