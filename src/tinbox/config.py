@@ -43,6 +43,8 @@ def remove_feed(feed_name: str | None = None, feed_url: str | None = None) -> No
         )
     if not feed_name:
         raise FeedURLNotFoundError(f"Feed with URL {feed_url} not found")
+    if feed_name not in list_feed_names():
+        raise FeedNameNotFoundError(f"Feed with name {feed_name} not found")
     config.remove_section(f"feeds.{feed_name}")
     save_config()
 
