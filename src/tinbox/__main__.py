@@ -1,18 +1,9 @@
 import argparse
-from collections.abc import Callable
-from typing import Any, TypedDict
+from typing import Any
 
 from tinbox.__init__ import __version__
 from tinbox.commands import _add, _cache, _config, _delete, _inbox, _list
-
-
-# If you modify this, make sure to update one_hot_vector() as well.
-class ArgsTemplateTemplate(TypedDict):
-    command: tuple[str, ...]
-    type: tuple[type, ...]
-    func: tuple[Callable, ...]
-    len: tuple[int, ...]
-
+from tinbox.types import ArgsTemplateTemplate
 
 # If you modify this, make sure to update one_hot_vector() as well.
 ARGS_TEMPLATE: ArgsTemplateTemplate = {
@@ -35,7 +26,7 @@ def get_attr_from_command(command: str, attr: str) -> Any:
 
 
 def one_hot_vector(args: argparse.Namespace) -> list[bool]:
-    # If you modify this list, make sure to update the if statement in parse() as well.
+    # If you modify this list, make sure to update ARGS_TEMPLATE as well.
     return [
         args.inbox,
         not args.add is None,

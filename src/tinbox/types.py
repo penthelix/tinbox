@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import TypeVar
+from typing import TypedDict, TypeVar
 
 type Video = dict[str, str]
 
@@ -70,3 +70,11 @@ class VideoFormat[T](dict[str, T | None]):
         if not self.type == bool:
             raise TypeError("Cannot get true values from non-bool type")
         return {key for key, value in self.items() if not value}
+
+
+# If you modify this, make sure to update one_hot_vector() as well.
+class ArgsTemplateTemplate(TypedDict):
+    command: tuple[str, ...]
+    type: tuple[type, ...]
+    func: tuple[Callable, ...]
+    len: tuple[int, ...]
