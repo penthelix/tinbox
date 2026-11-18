@@ -1,6 +1,6 @@
 # Tinbox
 
-Fetch YouTube videos from RSS feeds in your terminal.
+> Fetch YouTube videos from RSS feeds in your terminal. v0.2.0
 
 ![Tinbox help message](./assets/help-message.png)
 
