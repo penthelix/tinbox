@@ -92,18 +92,30 @@ def main():
         epilog="Get started by adding a feed with --add",
     )
     # If you modify this, make sure to update one_hot_vector() as well.
-    parser.add_argument("-i", "--inbox", action="store_true", help="get your inbox")
-    parser.add_argument("-a", "--add", action="extend", nargs=2, help="add a feed")
-    parser.add_argument("-d", "--delete", action="store", help="delete a feed")
+    parser.add_argument(
+        "-i", "--inbox", action="store_true", help="default, get your inbox"
+    )
     parser.add_argument("-l", "--list", action="store_true", help="list all feeds")
+    parser.add_argument(
+        "-a",
+        "--add",
+        action="extend",
+        nargs=2,
+        metavar=("NAME", "URL"),
+        help="add a feed",
+    )
+    parser.add_argument(
+        "-d", "--delete", action="store", metavar="NAME", help="delete a feed"
+    )
     parser.add_argument(
         "-c", "--config", action="store_true", help="open config file in vim"
     )
     parser.add_argument(
+        "--cache", action="store", metavar="prune|clear", help="prune/clear cache"
+    )
+    parser.add_argument(
         "-v", "--version", action="version", version=f"%(prog)s {__version__}"
     )
-    parser.add_argument("--cache", action="store", help="prune/clear cache")
-
     args = parser.parse_args()
     args = validated_args(args)
     parse(args)
