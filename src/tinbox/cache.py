@@ -35,6 +35,9 @@ get_age_from_cache: Callable[[str], timedelta] = lambda s: (
 
 
 def save_videos_to_cache(videos: list[Video], channel_name: str) -> bool:
+    """
+    Saves the videos to the cache directory. Uses the current UTC time as the timestamp.
+    """
     channel_name = sanitized_filename(channel_name)
     cache_fname: str = get_cache_name_now(channel_name)
     cache_path = CACHE_PATH / f"{cache_fname}.json"
@@ -46,11 +49,13 @@ def save_videos_to_cache(videos: list[Video], channel_name: str) -> bool:
 
 
 def clear_cache() -> bool:
+    """Clears the cache directory."""
     _ = subprocess.run(["rm", "-rf", CACHE_PATH], check=True)
     return True
 
 
 def prune_cache() -> bool:
+    """Removes all cache files older than CACHE_VACCUUM_TIME."""
     all_cache_files: list[Path] = [
         f for f in CACHE_PATH.glob("*.json") if (CACHE_PATH / f).is_file()
     ]
