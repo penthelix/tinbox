@@ -106,4 +106,6 @@ Tinbox has been tested on the following operating systems.
 
 ## AI Usage Disclosure
 
-In-line code completion was used in coding this project. Chat was used sparingly to debug. No agents were used.
+In-line code completion was used in coding this project. In the development of v0.1.0, chat was used sparingly to debug.
+
+No agents have ever been used.
