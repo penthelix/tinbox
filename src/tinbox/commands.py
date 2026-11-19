@@ -57,7 +57,13 @@ def _list(_):
 def _config(_):
     if not cfg.CONFIG_PATH.exists():
         cfg.init_config()
-    subprocess.run(["vim", cfg.CONFIG_PATH], check=True)
+    if cfg.vim_mode_enabled():
+        try:
+            _ = subprocess.run(["vim", cfg.CONFIG_PATH], check=True)
+        except FileNotFoundError:
+            _ = subprocess.run(["nano", cfg.CONFIG_PATH], check=True)
+    else:
+        _ = subprocess.run(["nano", cfg.CONFIG_PATH], check=True)
 
 
 def _cache(args: Namespace):
@@ -69,7 +75,7 @@ def _cache(args: Namespace):
             else:
                 print("Cache is already pruned.")
         case "clear":
-            clear_cache()
+            _ = clear_cache()
             print("Cleared cache.")
         case _:
             print(f"[error]: unrecognized command {args.cache}")
