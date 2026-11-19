@@ -15,7 +15,7 @@ def init_config() -> None:
     config = configparser.ConfigParser()
     config["tableColors"] = TABLE_COLORS.to_string_dict()
     config["colWidths"] = TABLE_COLS.to_string_dict()
-
+    config["settings"] = {"vimMode": "true"}
     save_config()
 
 
@@ -84,6 +84,23 @@ def get_table_cols() -> VideoFormat[int]:
         config["colWidths"] = cast(dict[str, str], TABLE_COLS.to_string_dict())
         cols = TABLE_COLS
     return cols
+
+
+def vim_mode_enabled() -> bool:
+    """
+    Checks config file to return whether DEFAULT.vimMode is enabled. Sets vimMode to
+    true if setting is unset or broken in config file.
+    """
+    _ = config.read(CONFIG_PATH)
+    try:
+        mode: str = config["settings"]["vimMode"].lower()
+        if not mode in ("true", "false"):
+            raise BrokenConfigError("Invalid vimMode value")
+    except KeyError, BrokenConfigError:
+        config["settings"]["vimMode"] = "true"
+        save_config()
+        return True
+    return config["settings"]["vimMode"].lower() == "true"
 
 
 def save_config() -> None:
