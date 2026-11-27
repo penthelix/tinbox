@@ -48,7 +48,7 @@ git clone https://github.com/penthelix/tinbox.git
 2. Build the executable using [PyInstaller](https://pyinstaller.org/) or a tool of your choice.
 
 ```bash
-pyinstaller --onefile src/__main__.py
+pyinstaller --onefile src/tinbox/__main__.py
 ```
 
 3. Move the executable to a folder in your PATH. This could be `/usr/local/bin` on MacOS.
@@ -90,6 +90,12 @@ uv sync
 
 ```bash
 uv run tinbox
+```
+
+4. Build the executable if needed.
+
+```bash
+uv run build
 ```
 
 ## Compatibility
