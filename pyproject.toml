@@ -9,20 +9,16 @@ dependencies = [
     "feedparser-sgmllib==1.0.0",
     "rich>=15.0.0",
 ]
-scripts = { tinbox = "tinbox.__main__:main" }
+
+[project.scripts]
+tinbox = "tinbox.__main__:main"
+build = "tinbox.build:main"
 
 [dependency-groups]
-dev = [
-    "basedpyright>=1.40.2",
-    "pyinstaller>=6.22.0",
-    "pytest>=9.1.1",
-    "tinbox",
-]
+dev = ["basedpyright>=1.40.2", "pyinstaller>=6.22.0", "pytest>=9.1.1", "tinbox"]
 
 [tool.uv.workspace]
-members = [
-    ".",
-]
+members = ["."]
 
 [tool.uv.sources]
 tinbox = { workspace = true, editable = true }
